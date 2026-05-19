@@ -9,3 +9,15 @@ variable "environment" {
 variable "log_retention_days" {
   type = number
 }
+
+variable "alb_arn_suffix" {
+  type = string
+}
+
+variable "target_group_arn_suffix" {
+  type = string
+}
+
+variable "asg_name" {
+  type = string
+}

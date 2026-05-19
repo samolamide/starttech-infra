@@ -52,3 +52,8 @@ output "ecr_repository_url" {
   description = "ECR repository URL for backend Docker images"
   value       = module.compute.ecr_repository_url
 }
+
+output "cloudwatch_dashboard_name" {
+  description = "CloudWatch operations dashboard name"
+  value       = module.monitoring.dashboard_name
+}

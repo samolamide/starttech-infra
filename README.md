@@ -1,6 +1,8 @@
-# StartTech Infrastructure (Phase 1)
+# StartTech Infrastructure
 
-Terraform project for the Month 3 assessment: VPC, ALB, ASG, S3, CloudFront, ElastiCache Redis, and CloudWatch.
+Terraform project for the Month 3 assessment: VPC, ALB, ASG, S3, CloudFront, ElastiCache Redis, CloudWatch dashboard/alarms, and ECR.
+
+**Documentation:** [ARCHITECTURE.md](./ARCHITECTURE.md) · [RUNBOOK.md](./RUNBOOK.md) · [ASSESSOR_ACCESS.md](./ASSESSOR_ACCESS.md)
 
 ## What gets created
 
@@ -12,7 +14,9 @@ Terraform project for the Month 3 assessment: VPC, ALB, ASG, S3, CloudFront, Ela
 | ElastiCache Redis | Sessions/cache for the backend |
 | S3 + CloudFront | Hosts the React frontend (private bucket, CDN in front) |
 | CloudWatch log groups | Central logging for backend and frontend |
-| IAM role | EC2 can write logs to CloudWatch |
+| CloudWatch dashboard + alarms | Ops metrics (ALB, ASG, unhealthy targets) |
+| ECR | Backend Docker image registry |
+| IAM role | EC2: CloudWatch logs, SSM, ECR pull |
 
 MongoDB runs on **MongoDB Atlas** (not Terraform). Connection strings belong in secrets, not in this repo.
 
@@ -79,7 +83,11 @@ terraform/
   modules/networking/   # VPC, SGs, Redis
   modules/compute/      # ALB, ASG, IAM
   modules/storage/      # S3, CloudFront
-  modules/monitoring/   # CloudWatch log groups
+  modules/monitoring/   # CloudWatch logs, dashboard, alarms
+monitoring/             # Log Insights queries, alarm reference JSON
+.github/workflows/      # infrastructure-deploy.yml
 ```
 
-Phase 2 adds `.github/workflows/infrastructure-deploy.yml` to apply Terraform from CI.
+## CI/CD
+
+`.github/workflows/infrastructure-deploy.yml` — Terraform plan/apply on push (uses S3 remote state).

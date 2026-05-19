@@ -6,6 +6,16 @@ output "alb_arn" {
   value = aws_lb.backend.arn
 }
 
+output "alb_arn_suffix" {
+  description = "CloudWatch dimension for ALB metrics"
+  value       = regexreplace(aws_lb.backend.arn, "^.*:loadbalancer/", "")
+}
+
+output "target_group_arn_suffix" {
+  description = "CloudWatch dimension for target group metrics"
+  value       = "targetgroup/${element(split("targetgroup/", aws_lb_target_group.backend.arn), 1)}"
+}
+
 output "target_group_arn" {
   value = aws_lb_target_group.backend.arn
 }

@@ -6,7 +6,7 @@
         "title": "ALB Request Count",
         "region": "us-east-1",
         "metrics": [
-          ["AWS/ApplicationELB", "RequestCount", "LoadBalancer", "REPLACE_WITH_ALB_SUFFIX"]
+          ["AWS/ApplicationELB", "RequestCount", "LoadBalancer", "app/starttech-dev-alb/f9621f86a36d3476"]
         ],
         "period": 300,
         "stat": "Sum"
