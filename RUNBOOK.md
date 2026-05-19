@@ -43,10 +43,14 @@ aws s3 ls s3://$(terraform output -raw frontend_bucket_name)/
 Cause: CI had empty state while resources existed locally.  
 Fix: S3 backend configured; ensure state file exists in state bucket.
 
-### ALB targets unhealthy
+### ALB 502 / targets unhealthy
 
-Cause: Backend container not running on EC2.  
-Fix: Run backend pipeline in `starttech-application`; confirm SSM online: `aws ssm describe-instance-information`.
+1. **Container crash-loop (Mongo TLS):** Check logs via SSM: `docker logs starttech-backend`. If you see `tls: internal error`, rebuild the backend image (Alpine needs `ca-certificates` in the Dockerfile) and redeploy.
+2. **MongoDB Atlas network access:** EC2 instances use the VPC NAT gateway IPs. In Atlas → Network Access → IP Access List, allow:
+   - `34.232.251.145/32`
+   - `3.216.160.35/32`
+   (Re-run `aws ec2 describe-nat-gateways --filter Name=tag:Project,Values=starttech --query 'NatGateways[*].NatGatewayAddresses[0].PublicIp'` if you recreate NAT gateways.)
+3. **No container on instance:** Run the backend pipeline in `starttech-application`; confirm SSM is online: `aws ssm describe-instance-information`.
 
 ### Redis connection failed
 
