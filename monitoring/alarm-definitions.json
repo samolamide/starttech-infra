@@ -1,0 +1,20 @@
+[
+  {
+    "name": "starttech-alb-5xx",
+    "description": "Alert when ALB returns too many 5xx errors",
+    "metric": "HTTPCode_Target_5XX_Count",
+    "namespace": "AWS/ApplicationELB",
+    "threshold": 10,
+    "period": 300,
+    "evaluation_periods": 2
+  },
+  {
+    "name": "starttech-asg-unhealthy",
+    "description": "Alert when targets are unhealthy",
+    "metric": "UnHealthyHostCount",
+    "namespace": "AWS/ApplicationELB",
+    "threshold": 1,
+    "period": 60,
+    "evaluation_periods": 2
+  }
+]

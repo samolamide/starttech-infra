@@ -1,0 +1,12 @@
+# Backend errors (last hour)
+fields @timestamp, @message
+| filter @message like /error|ERROR|panic/
+| sort @timestamp desc
+| limit 50
+
+# Slow requests (if your app logs duration)
+fields @timestamp, @message
+| parse @message "duration=*" as duration
+| filter duration > 1000
+| sort @timestamp desc
+| limit 20

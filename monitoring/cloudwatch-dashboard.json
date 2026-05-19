@@ -1,0 +1,28 @@
+{
+  "widgets": [
+    {
+      "type": "metric",
+      "properties": {
+        "title": "ALB Request Count",
+        "region": "us-east-1",
+        "metrics": [
+          ["AWS/ApplicationELB", "RequestCount", "LoadBalancer", "REPLACE_WITH_ALB_SUFFIX"]
+        ],
+        "period": 300,
+        "stat": "Sum"
+      }
+    },
+    {
+      "type": "metric",
+      "properties": {
+        "title": "ASG CPU Utilization",
+        "region": "us-east-1",
+        "metrics": [
+          ["AWS/EC2", "CPUUtilization", "AutoScalingGroupName", "starttech-dev-asg"]
+        ],
+        "period": 300,
+        "stat": "Average"
+      }
+    }
+  ]
+}

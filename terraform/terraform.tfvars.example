@@ -1,0 +1,18 @@
+# Copy this file to terraform.tfvars and adjust values.
+# NEVER commit terraform.tfvars (it may contain secrets).
+
+aws_region           = "us-east-1"
+project_name         = "starttech"
+environment          = "dev"
+vpc_cidr             = "10.0.0.0/16"
+instance_type        = "t3.micro"
+asg_min_size         = 1
+asg_max_size         = 3
+asg_desired_capacity = 2
+backend_port         = 8080
+redis_node_type      = "cache.t3.micro"
+log_retention_days   = 14
+
+# MongoDB Atlas is NOT created by Terraform.
+# Store these in GitHub Secrets / SSM for the backend app (Phase 2):
+#   MONGO_URI, DB_NAME, JWT_SECRET_KEY, REDIS_ADDR
