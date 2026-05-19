@@ -149,9 +149,9 @@ resource "aws_launch_template" "backend" {
     #!/bin/bash
     set -eux
     dnf update -y
-    dnf install -y docker
-    systemctl enable docker
-    systemctl start docker
+    dnf install -y docker amazon-ssm-agent
+    systemctl enable docker amazon-ssm-agent
+    systemctl start docker amazon-ssm-agent
     usermod -aG docker ec2-user
     # Backend container is deployed in Phase 2 (CI/CD)
   EOF
