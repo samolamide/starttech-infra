@@ -7,8 +7,8 @@ output "alb_arn" {
 }
 
 output "alb_arn_suffix" {
-  description = "CloudWatch dimension for ALB metrics"
-  value       = regexreplace(aws_lb.backend.arn, "^.*:loadbalancer/", "")
+  description = "CloudWatch dimension for ALB metrics (app/name/id)"
+  value       = join("/", slice(split("/", aws_lb.backend.arn), 1, 4))
 }
 
 output "target_group_arn_suffix" {
