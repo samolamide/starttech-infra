@@ -29,6 +29,18 @@ MongoDB runs on **MongoDB Atlas** (not Terraform). Connection strings belong in 
 
 4. MongoDB Atlas cluster (already set up) and **Network Access** allowing AWS egress IPs or `0.0.0.0/0` for dev.
 
+## Terraform state (S3 backend)
+
+State is stored in `s3://starttech-terraform-state-051826713811/starttech-infra/dev/terraform.tfstate` so local runs and GitHub Actions share the same state.
+
+First-time setup (after cloning):
+
+```bash
+aws s3 mb s3://starttech-terraform-state-051826713811 --region us-east-1  # skip if exists
+cd terraform
+terraform init -migrate-state   # moves local state to S3 (answer yes)
+```
+
 ## Deploy (local)
 
 ```bash

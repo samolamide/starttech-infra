@@ -33,6 +33,14 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ env.AWS_REGION }}
 
+      - name: Ensure Terraform state bucket exists
+        run: |
+          aws s3api head-bucket --bucket starttech-terraform-state-051826713811 2>/dev/null || \
+          aws s3 mb s3://starttech-terraform-state-051826713811 --region us-east-1
+          aws s3api put-bucket-versioning \
+            --bucket starttech-terraform-state-051826713811 \
+            --versioning-configuration Status=Enabled
+
       - name: Terraform init
         run: terraform init
 
